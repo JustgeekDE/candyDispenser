@@ -187,7 +187,7 @@ module candyPortioner(diameter, length) {
   }
 }
 
-module supportStrut(thickness, width, height, singleSupport, singleSupport = false) {
+module supportStrut(thickness, width, height, singleSupport = false) {
   strutHeight = min(width, 8);
   translate([-thickness/2, -width/2,0])
   union(){
@@ -262,22 +262,36 @@ module basePlate() {
     translate([0,0,0]){
 
       translate([-2.5,-2.5,0]){
-        translate([26.5,0,0]){
-          union(){
-            translate([2,0,0]){
-              translate([0,60.3,0])
-              supportStrutWithHole(4,7,servoHeight+5, diameter=2.6, holeHeight=servoHeight, offsetFromCenter=-1.3);
-              translate([0,30.3,0]) {
-                supportStrutWithHole(4,7,servoHeight+5, diameter=2.6, holeHeight=servoHeight, offsetFromCenter=1.3);
-                translate([7,0,0])
-                supportStrutWithHole(4,7,servoHeight-3.5, diameter=2.6, holeHeight=servoHeight, offsetFromCenter=1.3);
+        translate([26,0,0]){
+          difference(){
+            union(){
+              translate([2,0,0]){
+                translate([0,60.3,0])
+                supportStrut(4,7,servoHeight+2);
+                translate([-2,26.8,0]) {
+                  cube([11,10,servoHeight-6.5]);
+                  translate([7,0,0])
+                  cube([4,7,servoHeight-2.5]);
+                  translate([0,0,0])
+                  cube([4,7,servoHeight+2]);
+                }
 
               }
 
+              translate([0,33,0])
+              cube([23,25,servoHeight-6.5]);
             }
-
-            translate([0,33,0])
-            cube([23,25,servoHeight-6.5]);
+            translate([0,33,7]){
+              translate([-20,4,0])
+              rotate([0,90,0])
+              tube(5,100);
+              translate([-20,21,0])
+              rotate([0,90,0])
+              tube(5,100);
+              translate([15,40,0])
+              rotate([90,0,0])
+              tube(5,100);
+            }
         }
 
         }
