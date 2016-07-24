@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from lxml import etree
 import argparse
 import requests
