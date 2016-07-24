@@ -399,79 +399,86 @@ module hood() {
   edgeLength = 56.5;
   sphereDiameter = 45;
 
-  difference(){
-    union(){
-      difference(){
-        hoodShape(height, edgeLength);
-        translate([0,0,-0.1])
-        scale(0.97)
-        hoodShape(height, edgeLength);
+    difference(){
+      union(){
+        difference(){
+          hoodShape(height, edgeLength);
+          translate([0,0,-0.1])
+          scale(0.97)
+          hoodShape(height, edgeLength);
+        }
+        translate([0,0,height-8.5])
+        hollowTube(glassDiameter-4, glassDiameter+11, 8.5);
+        translate([0,0,54])
+        tube(71, 20);
+
+        translate([0,39.5,38])
+        rotate([2.6,0,0])
+        rotate([90,0,0])
+        rotate([0,0,90])
+        raspberry(5, 4);
+
       }
-      translate([0,0,height-8.5])
-      hollowTube(glassDiameter-4, glassDiameter+11, 8.5);
-      translate([0,0,54])
-      tube(71, 20);
-    }
-    translate([0,0,height-6])
-    hollowTube(glassDiameter, glassDiameter+6, 10);
-    translate([-16, -8,0])
-    cube([32,16,height+10]);
-//    tube(25, height+10);
-    translate([0,0,height+(sphereDiameter-10)])
-    sphere(r=sphereDiameter);
-
-
-
-    union() {
       translate([0,0,height-6])
-      rotate(a=225, v=[0,0,1])
-      bayonetCatch(glassDiameter, glassDiameter+12);
-    }
+      hollowTube(glassDiameter, glassDiameter+6, 10);
+      translate([-16, -8,0])
+      cube([32,16,height+10]);
+    //    tube(25, height+10);
+      translate([0,0,height+(sphereDiameter-10)])
+      sphere(r=sphereDiameter);
 
-    translate([0,0,8])
-    union(){
-      translate([35,0,0]){
-        translate([0,25,0])
-        cube([15,11,6]);
-        translate([0,-36,0])
-        cube([15,11,6]);
+
+
+      union() {
+        translate([0,0,height-6])
+        rotate(a=225, v=[0,0,1])
+        bayonetCatch(glassDiameter, glassDiameter+12);
       }
-      translate([-45,0,0]){
-        translate([0,25,0])
-        cube([15,11,6]);
-        translate([0,-36,0])
-        cube([15,11,6]);
+
+      translate([0,0,8])
+      union(){
+        translate([35,0,0]){
+          translate([0,25,0])
+          cube([15,11,6]);
+          translate([0,-36,0])
+          cube([15,11,6]);
+        }
+        translate([-45,0,0]){
+          translate([0,25,0])
+          cube([15,11,6]);
+          translate([0,-36,0])
+          cube([15,11,6]);
+        }
       }
-    }
 
-    union() {
-      translate([0,0,height-6])
-      rotate(a=45, v=[0,0,1])
-      bayonetCatch(glassDiameter, glassDiameter+12);
-    }
-
-    translate([0,0,50])
-    rotate([0,90,0])
-    translate([0,0,-35.6])
-    tube(33,71.2);
-
-    translate([-17,-50,-0.1])
-    union(){
-      cube([34,60,15]);
-      translate([0,0,14.9])
-      rotate([-90,0,0])
-      translate([17,0,-30])
-      difference(){
-        tube(34, 50);
-        translate([-18,0,-5])
-        cube([36,40,60]);
+      union() {
+        translate([0,0,height-6])
+        rotate(a=45, v=[0,0,1])
+        bayonetCatch(glassDiameter, glassDiameter+12);
       }
-    }
-    translate([-0,30,38])
-    rotate([-85,0,0])
+
+      translate([0,0,50])
+      rotate([0,90,0])
+      translate([0,0,-35.6])
+      tube(33,71.2);
+
+      translate([-17,-50,-0.1])
+      union(){
+        cube([34,60,15]);
+        translate([0,0,14.9])
+        rotate([-90,0,0])
+        translate([17,0,-30])
+        difference(){
+          tube(34, 50);
+          translate([-18,0,-5])
+          cube([36,40,60]);
+        }
+      }
+    translate([0,42,38])
+    rotate([2.6,0,0])
+    rotate([90,0,0])
     rotate([0,0,90])
-    raspberry();
-
+    raspberry(3, 20);
   }
 }
 
@@ -552,16 +559,17 @@ module tray(){
   }
 }
 
-module all(){
+module all(exploded = 0){
+  ex = exploded;
   rotation = maxRotation * 2 * abs($t-0.5);
 
-  translate([0,0,30])
+  translate([0,0,ex*30])
   translate([-20,0,dispenserHeigth])
   rotate([rotation,0,0])
   color("DarkGrey")
   candyPortioner(dispenserDiameter, 40);
 
-  translate([-30,0,30])
+  translate([ex*-30,0,ex*30])
   translate([-25,0,dispenserHeigth])
   rotate([180,0,0])
   rotate([rotation,0,0]){
@@ -571,8 +579,7 @@ module all(){
 
   }
 
-  translate([-20,0,0])
-  translate([0,60,0])
+  translate([ex*-20,ex*60,0])
   color("DarkGrey")
   translate([-24.5,0,servoHeight])
   rotate([-rotation,0,0]){
@@ -583,7 +590,7 @@ module all(){
     tube(4, 10);
   }
 
-  translate([0,40,0])
+  translate([0,ex*40,0])
   translate([10,0,servoHeight])
   rotate([0,270,0])
   color([0.05,0.05,0.05,0.3])
@@ -593,20 +600,21 @@ module all(){
   basePlate();
 
 
-  translate([0,-20,0])
+  translate([0,ex*-20,0])
   translate([0,-82,-2])
   color("DarkGrey")
   tray();
 
 
-  translate([0,0,120])
+  translate([0,0,ex*120])
   translate([0,0,-2])
   color([1,0.6,0,0.3])
   hood();
+
+  translate([0,0,ex*130])
   color([0.8,0.8,0.8,0.9])
   rotate(a=45, v=[0,0,1])
-  translate([0,0,130])
-  translate([0,0,100])
+  translate([0,0,78])
   container();
 }
 
@@ -615,7 +623,8 @@ pitchRadius = 14;
 servoHeight = pitchRadius+5;
 dispenserHeigth = 2*pitchRadius+servoHeight;
 maxRotation = 116;
-//$t = 0.5;
+$t = 0.5;
 dispenserDiameter = 30;
 
-//all();
+all(1);
+//hood();
