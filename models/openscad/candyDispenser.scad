@@ -49,16 +49,16 @@ module m3Cutout(length) {
   screwCutout(3.4, length, 6, 14);
 }
 
-module raspberry(){
+module raspberry(diameter=3.4, length=10){
   union() {
     translate([-29,-24.5,0])
-    m3Cutout(20);
+    tube(diameter, length);
     translate([29,-24.5,0])
-    m3Cutout(20);
+    tube(diameter, length);
     translate([-29,24.5,0])
-    m3Cutout(20);
+    tube(diameter, length);
     translate([29,24.5,0])
-    m3Cutout(20);
+    tube(diameter, length);
   }
 
 }
@@ -404,7 +404,7 @@ module hood() {
       difference(){
         hoodShape(height, edgeLength);
         translate([0,0,-0.1])
-        scale(0.95)
+        scale(0.97)
         hoodShape(height, edgeLength);
       }
       translate([0,0,height-8.5])
@@ -414,7 +414,9 @@ module hood() {
     }
     translate([0,0,height-6])
     hollowTube(glassDiameter, glassDiameter+6, 10);
-    tube(15, height+10);
+    translate([-16, -8,0])
+    cube([32,16,height+10]);
+//    tube(25, height+10);
     translate([0,0,height+(sphereDiameter-10)])
     sphere(r=sphereDiameter);
 
