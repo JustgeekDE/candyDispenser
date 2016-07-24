@@ -532,12 +532,13 @@ module tray(){
     translate([0,width,2.7]) {
       slotWidth = 7;
       slotHeight = 2;
+      slotLength = 10;
         translate([-15.5,0,0])
-        cube([slotWidth,4,slotHeight]);
+        cube([slotWidth,slotLength,slotHeight]);
         translate([-3.5,0,0])
-        cube([slotWidth,4,slotHeight]);
+        cube([slotWidth,slotLength,slotHeight]);
         translate([8.5,0,0])
-        cube([slotWidth,4,slotHeight]);
+        cube([slotWidth,slotLength,slotHeight]);
 
     }
     translate([-width/2, 0,0])
