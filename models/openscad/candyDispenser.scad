@@ -300,7 +300,7 @@ module basePlate() {
 
         }
 
-        translate([63,40,0])
+        translate([64,40,0])
         supportStrutWithHole(5,15,dispenserHeigth+5, diameter=3.4, holeHeight=dispenserHeigth);
 
         translate([12,40,0])
@@ -631,12 +631,11 @@ module all(exploded = 0){
 }
 
 $fn = 150;
-pitchRadius = 14;
+pitchRadius = 13.5;
 servoHeight = pitchRadius+5;
 dispenserHeigth = 2*pitchRadius+servoHeight;
 maxRotation = 116;
 $t = 0.5;
 dispenserDiameter = 30;
 
-//all(1);
-hood();
+all(0);
