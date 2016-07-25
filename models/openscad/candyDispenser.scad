@@ -162,7 +162,11 @@ module candyPortioner(diameter, length) {
           cutoutSize = (length/2) - 4;
           insetDepth = 3;
           cutoutHeight = radius + insetDepth + 1;
-          tube(diameter, length);
+          union(){
+            tube(diameter, length);
+            translate([2.2,10,length/2-0.3])
+            tube(21,2);
+          }
           translate([insetDepth,0,0])
           translate([0,0,length/2])
           scale([1,(diameter/length),1])
@@ -420,6 +424,17 @@ module hood() {
         raspberry(5, 2.5);
 
       }
+      translate([0,0,50])
+      rotate([0,90,0])
+      translate([0,0,-35.6])
+      union(){
+        tube(33,71.2);
+        translate([0,0,34])
+        tube(44,4);
+
+      }
+
+
       translate([0,0,height-6])
       hollowTube(glassDiameter, glassDiameter+6, 10);
       translate([-16, -8,0])
@@ -458,10 +473,6 @@ module hood() {
         bayonetCatch(glassDiameter, glassDiameter+12);
       }
 
-      translate([0,0,50])
-      rotate([0,90,0])
-      translate([0,0,-35.6])
-      tube(33,71.2);
 
       translate([-17,-50,-0.1])
       union(){
