@@ -49,7 +49,7 @@ module m3Cutout(length) {
   screwCutout(3.4, length, 6, 14);
 }
 
-module raspberry(diameter=3.4, length=10){
+module raspberry(diameter=2.8, length=10){
   union() {
     translate([-29,-24.5,0])
     tube(diameter, length);
@@ -395,9 +395,9 @@ module bayonetCatch(innerDiameter, outerDiameter){
 
 module hood() {
   glassDiameter = 60;
-  height = 78;
+  height = 76.5;
   edgeLength = 56.5;
-  sphereDiameter = 45;
+  sphereDiameter = 41;
 
     difference(){
       union(){
@@ -408,15 +408,16 @@ module hood() {
           hoodShape(height, edgeLength);
         }
         translate([0,0,height-8.5])
-        hollowTube(glassDiameter-4, glassDiameter+11, 8.5);
-        translate([0,0,54])
-        tube(71, 20);
+        tube(glassDiameter+11, 8.5);
+        translate([-25,-18,50])
+        cube([50,36,20]);
+//        tube(71, 20);
 
-        translate([0,39.5,38])
+        translate([0,38.5,38])
         rotate([2.6,0,0])
         rotate([90,0,0])
         rotate([0,0,90])
-        raspberry(5, 4);
+        raspberry(5, 2.5);
 
       }
       translate([0,0,height-6])
@@ -424,7 +425,7 @@ module hood() {
       translate([-16, -8,0])
       cube([32,16,height+10]);
     //    tube(25, height+10);
-      translate([0,0,height+(sphereDiameter-10)])
+      translate([0,0,height+(sphereDiameter-12)])
       sphere(r=sphereDiameter);
 
 
@@ -626,5 +627,5 @@ maxRotation = 116;
 $t = 0.5;
 dispenserDiameter = 30;
 
-all(1);
-//hood();
+//all(1);
+hood();
