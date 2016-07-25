@@ -387,9 +387,9 @@ module hoodShape(height, edgeLength){
 
 module bayonetCatch(innerDiameter, outerDiameter){
   union(){
-    curvedSegment(innerDiameter/2, outerDiameter/2, 10, 8);
+    curvedSegment(innerDiameter/2, outerDiameter/2, 10, 16);
     rotate(a=-8, v=[0,0,1])
-    curvedSegment(innerDiameter/2, outerDiameter/2, 4, 16);
+    curvedSegment(innerDiameter/2, outerDiameter/2, 4, 32);
   }
 }
 
@@ -516,9 +516,9 @@ module container(){
       tube(ringDiameter-3, tubeLength+20);
     }
     translate([0,0,-tubeLength+8]){
-      curvedSegment(ringDiameter/2, ringDiameter/2+3, 3, 6);
+      curvedSegment(ringDiameter/2, ringDiameter/2+3, 3, 12);
       rotate(a=180, v=[0,0,1])
-      curvedSegment(ringDiameter/2, ringDiameter/2+3, 3, 6);
+      curvedSegment(ringDiameter/2, ringDiameter/2+3, 3, 12);
     }
   }
 }
