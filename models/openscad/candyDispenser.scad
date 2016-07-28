@@ -164,8 +164,9 @@ module candyPortioner(diameter, length) {
           cutoutHeight = radius + insetDepth + 1;
           union(){
             tube(diameter, length);
-            translate([2.2,10,length/2-0.3])
-            tube(21,2);
+            translate([2.2,12.5,length/2-0.3])
+            color("blue")
+            tube(23,2);
           }
           translate([insetDepth,0,0])
           translate([0,0,length/2])
@@ -379,29 +380,28 @@ module basePlate() {
 }
 
 module hoodShape(height, edgeLength){
-  wallStrength = 2;
-  sphereDiameter = 50;
   difference(){
     rotate(a=45, v=[0,0,1])
     cylinder(h = height, r1 = edgeLength, r2 = edgeLength-5, $fn=4);
-//    translate([0,0,height+(sphereDiameter-10)])
-//    sphere(r=sphereDiameter);
   }
 }
 
 module bayonetCatch(innerDiameter, outerDiameter){
   union(){
-    curvedSegment(innerDiameter/2, outerDiameter/2, 10, 16);
-    rotate(a=-8, v=[0,0,1])
-    curvedSegment(innerDiameter/2, outerDiameter/2, 4, 32);
+    if(disableBayonet == 0){
+      curvedSegment(innerDiameter/2, outerDiameter/2, 10, 16);
+      rotate(a=-8, v=[0,0,1])
+      curvedSegment(innerDiameter/2, outerDiameter/2, 4, 32);
+    }
   }
 }
 
 module hood() {
   glassDiameter = 60;
-  height = 76.5;
-  edgeLength = 56.5;
+  height = 75.2;
+  edgeLength = 56.2;
   sphereDiameter = 41;
+  slotWidth = 6;
 
     difference(){
       union(){
@@ -414,6 +414,7 @@ module hood() {
         translate([0,0,height-8.5])
         tube(glassDiameter+11, 8.5);
         translate([-25,-18,50])
+        color("brown")
         cube([50,36,20]);
 //        tube(71, 20);
 
@@ -424,22 +425,22 @@ module hood() {
         raspberry(5, 2.5);
 
       }
-      translate([0,0,50])
+      translate([0,0,dispenserHeigth+3])
       rotate([0,90,0])
-      translate([0,0,-35.6])
+      translate([0,0,-35])
+      color("grey")
       union(){
-        tube(33,71.2);
-        translate([0,0,34])
-        tube(44,4);
+        tube(dispenserDiameter+4,70);
+        translate([0,0,35.4-(slotWidth/2)])
+        tube(44,slotWidth);
 
       }
-
 
       translate([0,0,height-6])
       hollowTube(glassDiameter, glassDiameter+6, 10);
       translate([-16, -8,0])
+      color("red")
       cube([32,16,height+10]);
-    //    tube(25, height+10);
       translate([0,0,height+(sphereDiameter-12)])
       sphere(r=sphereDiameter);
 
@@ -467,6 +468,7 @@ module hood() {
         }
       }
 
+      color("brown")
       union() {
         translate([0,0,height-6])
         rotate(a=45, v=[0,0,1])
@@ -475,6 +477,7 @@ module hood() {
 
 
       translate([-17,-50,-0.1])
+      color("blue")
       union(){
         cube([34,60,15]);
         translate([0,0,14.9])
@@ -490,7 +493,10 @@ module hood() {
     rotate([2.6,0,0])
     rotate([90,0,0])
     rotate([0,0,90])
-    raspberry(3, 20);
+    raspberry(3, 10);
+    color("aqua")
+    translate([6,35,-2])
+    cube([10,10,10]);
   }
 }
 
@@ -511,7 +517,7 @@ module containerHull(diameter, height, cornerRadius){
 module container(){
   ringDiameter = 65;
   diameter = 76;
-  height = 70;
+  height = 71;
   tubeLength = 16;
 
   union(){
@@ -623,11 +629,11 @@ module all(exploded = 0){
   color([1,0.6,0,0.3])
   hood();
 
-  translate([0,0,ex*130])
+  /*translate([0,0,ex*130])
   color([0.8,0.8,0.8,0.9])
   rotate(a=45, v=[0,0,1])
   translate([0,0,78])
-  container();
+  container();*/
 }
 
 $fn = 150;
@@ -637,5 +643,6 @@ dispenserHeigth = 2*pitchRadius+servoHeight;
 maxRotation = 116;
 $t = 0.5;
 dispenserDiameter = 30;
+disableBayonet = 0;
 
 all(0);
