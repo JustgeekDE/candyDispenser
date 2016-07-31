@@ -24,6 +24,7 @@ module hollowTube(innerDiameter, outerDiameter, length) {
 }
 module curvedSegment(innerDiameter, outerDiameter, height, angle){
   outerHull = outerDiameter + 10;
+  if(disableBayonet == 0){
   difference(){
     hollowTube(innerDiameter*2, outerDiameter*2, height);
     union() {
@@ -34,6 +35,7 @@ module curvedSegment(innerDiameter, outerDiameter, height, angle){
       translate([-outerHull, -outerHull, -1])
       cube([2*outerHull,  outerHull,  height+2]);
     }
+  }
   }
 }
 
@@ -577,17 +579,19 @@ module tray(){
   }
 }
 
-module all(exploded = 0){
+module all(rotation = 0, exploded = 0){
   ex = exploded;
-  rotation = maxRotation * 2 * abs($t-0.5);
+  fHalf = min(0.5, ex)*2;
+  sHalf = (max(0.5, ex) -0.5) * 2;
+  rotation = maxRotation * 2 * abs(roation-0.5);
 
-  translate([0,0,ex*30])
+  translate([0,0,fHalf*30])
   translate([-20,0,dispenserHeigth])
   rotate([rotation,0,0])
   color("DarkGrey")
   candyPortioner(dispenserDiameter, 40);
 
-  translate([ex*-30,0,ex*30])
+  translate([sHalf*-30,0,fHalf*30])
   translate([-25,0,dispenserHeigth])
   rotate([180,0,0])
   rotate([rotation,0,0]){
@@ -597,8 +601,8 @@ module all(exploded = 0){
 
   }
 
-  translate([ex*-20,ex*60,0])
-  color("DarkGrey")
+  translate([sHalf*-20,fHalf*60,0])
+  color("DarkOrange")
   translate([-24.5,0,servoHeight])
   rotate([-rotation,0,0]){
     rotate([0,90,0])
@@ -608,7 +612,7 @@ module all(exploded = 0){
     tube(4, 10);
   }
 
-  translate([0,ex*40,0])
+  translate([0,fHalf*60,0])
   translate([10,0,servoHeight])
   rotate([0,270,0])
   color([0.05,0.05,0.05,0.3])
@@ -618,31 +622,30 @@ module all(exploded = 0){
   basePlate();
 
 
-  translate([0,ex*-20,0])
+  translate([0,fHalf*-20,0])
   translate([0,-82,-2])
   color("DarkGrey")
   tray();
 
 
-  translate([0,0,ex*120])
+  translate([0,0,fHalf*120])
   translate([0,0,-2])
   color([1,0.6,0,0.3])
   hood();
 
-  translate([0,0,ex*130])
+  translate([0,0,fHalf*150])
   color([0.8,0.8,0.8,0.9])
   rotate(a=45, v=[0,0,1])
   translate([0,0,78])
   container();
 }
 
-$fn = 150;
+$fn = 90;
 pitchRadius = 13.5;
 servoHeight = pitchRadius+5;
 dispenserHeigth = 2*pitchRadius+servoHeight;
 maxRotation = 116;
-$t = 0.5;
+//$t = 0.5/
 dispenserDiameter = 30;
 disableBayonet = 0;
-
-all(1);
+all(0.5, $t);
