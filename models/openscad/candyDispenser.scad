@@ -389,6 +389,7 @@ module hoodShape(height, edgeLength){
 module bayonetCatch(innerDiameter, outerDiameter){
   union(){
     if(disableBayonet == 0){
+      translate([0,0,0.05])
       curvedSegment(innerDiameter/2, outerDiameter/2, 10, 16);
       rotate(a=-8, v=[0,0,1])
       curvedSegment(innerDiameter/2, outerDiameter/2, 4, 32);
@@ -401,14 +402,14 @@ module hood() {
   height = 75.2;
   edgeLength = 56.2;
   sphereDiameter = 41;
-  slotWidth = 6;
+  slotWidth = 5;
 
     difference(){
       union(){
         difference(){
           hoodShape(height, edgeLength);
           translate([0,0,-0.1])
-          scale(0.97)
+          scale(0.96)
           hoodShape(height, edgeLength);
         }
         translate([0,0,height-8.5])
@@ -427,12 +428,12 @@ module hood() {
       }
       translate([0,0,dispenserHeigth+3])
       rotate([0,90,0])
-      translate([0,0,-35])
+      translate([0,0,-33])
       color("grey")
       union(){
-        tube(dispenserDiameter+4,70);
-        translate([0,0,35.4-(slotWidth/2)])
-        tube(44,slotWidth);
+        tube(dispenserDiameter+4,66);
+        translate([0,0,34.5-(slotWidth/2)])
+        tube(46,slotWidth);
 
       }
 
@@ -446,11 +447,6 @@ module hood() {
 
 
 
-      union() {
-        translate([0,0,height-6])
-        rotate(a=225, v=[0,0,1])
-        bayonetCatch(glassDiameter, glassDiameter+12);
-      }
 
       translate([0,0,8])
       union(){
@@ -469,8 +465,10 @@ module hood() {
       }
 
       color("brown")
+      translate([0,0,height-6])
       union() {
-        translate([0,0,height-6])
+        rotate(a=225, v=[0,0,1])
+        bayonetCatch(glassDiameter, glassDiameter+12);
         rotate(a=45, v=[0,0,1])
         bayonetCatch(glassDiameter, glassDiameter+12);
       }
@@ -479,6 +477,8 @@ module hood() {
       translate([-17,-50,-0.1])
       color("blue")
       union(){
+        translate([-2,0,0])
+        cube([38,60,11]);
         cube([34,60,15]);
         translate([0,0,14.9])
         rotate([-90,0,0])
@@ -629,11 +629,11 @@ module all(exploded = 0){
   color([1,0.6,0,0.3])
   hood();
 
-  /*translate([0,0,ex*130])
+  translate([0,0,ex*130])
   color([0.8,0.8,0.8,0.9])
   rotate(a=45, v=[0,0,1])
   translate([0,0,78])
-  container();*/
+  container();
 }
 
 $fn = 150;
@@ -645,4 +645,4 @@ $t = 0.5;
 dispenserDiameter = 30;
 disableBayonet = 0;
 
-all(0);
+all(1);
